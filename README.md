@@ -27,4 +27,4 @@
 ## links
 
 - <https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/use-terraform-for-azd>
-
+- <https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/container_app>
