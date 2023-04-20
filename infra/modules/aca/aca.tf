@@ -1,5 +1,5 @@
 resource "azurerm_container_app_environment" "aca_env" {
-  name                = "aca-${var.resource_token}"
+  name                = "cae-${var.resource_token}"
   resource_group_name = var.rg_name
   location            = var.location
   tags                = var.tags

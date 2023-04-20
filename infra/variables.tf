@@ -27,3 +27,15 @@ variable "secretstore_admins" {
   default     = []
   description = "List of Key Vault administrator object / principal Ids"
 }
+
+variable "receiver_image" {
+  type        = string
+  default     = "nginx:latest"
+  description = "The image to use for the receiver container"
+}
+
+variable "sender_image" {
+  type        = string
+  default     = "nginx:latest"
+  description = "The image to use for the sender container"
+}

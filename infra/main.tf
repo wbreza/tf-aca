@@ -5,7 +5,7 @@ locals {
 }
 
 resource "azurerm_resource_group" "rg" {
-  name     = "${var.environment_name}-rg"
+  name     = "rg-${var.environment_name}"
   location = var.location
   tags     = local.tags
 }
@@ -72,4 +72,30 @@ module "servicebus" {
   rg_name        = azurerm_resource_group.rg.name
   tags           = local.tags
   resource_token = local.resource_token
+}
+
+module "receiver" {
+  source                       = "./modules/receiver"
+  location                     = var.location
+  rg_name                      = azurerm_resource_group.rg.name
+  tags                         = local.tags
+  resource_token               = local.resource_token
+  app_name                     = "receiver"
+  app_image                    = var.receiver_image
+  container_app_environment_id = module.aca.CONTAINER_APP_ENV_ID
+  login_server                 = module.acr.CONTAINER_REGISTRY_ENDPOINT
+  registry_identity            = module.acr.CONTAINER_REGISTRY_PULL_IDENTITY_RESOURCE_ID
+}
+
+module "sender" {
+  source                       = "./modules/sender"
+  location                     = var.location
+  rg_name                      = azurerm_resource_group.rg.name
+  tags                         = local.tags
+  resource_token               = local.resource_token
+  app_name                     = "sender"
+  app_image                    = var.sender_image
+  container_app_environment_id = module.aca.CONTAINER_APP_ENV_ID
+  login_server                 = module.acr.CONTAINER_REGISTRY_ENDPOINT
+  registry_identity            = module.acr.CONTAINER_REGISTRY_PULL_IDENTITY_RESOURCE_ID
 }
